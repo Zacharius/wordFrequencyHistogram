@@ -9,7 +9,7 @@ public class WordHistogram{
 
 	if(arg.length != 1){
 	    System.out.println("Wrong number of arguements");
-	    System.out.println("Usage: WordHistogram wordFile");
+	    System.out.println("File Usage: WordHistogram wordFile");
 	    System.exit(-1);
 	}
 
@@ -47,19 +47,17 @@ public class WordHistogram{
 			wordMap.put(tokens.sval, 1);
 		    }
 
-		    //find the longest word
 		    if(tokens.sval.length() > maxLen){
 			maxLen = tokens.sval.length();
 		    }
 		}
 			  
 	    }
-	    inFileReader.close();
 	    
 	}
 	catch(IOException e){
 	    e.printStackTrace();
-	    System.out.println("IOEXception: Check that provided File Exists");
+	    System.out.print("IOEXception: Check that provided File Exists");
 	    System.exit(-1);
 	}
 
@@ -68,12 +66,9 @@ public class WordHistogram{
 
 	keys = freqTree.descendingKeySet();
 
-	//print all keys in treeMap
-	System.out.println("Word Frequency Histogram for " + arg[0]);
 	for(int key : keys){
 	    printList(maxLen, key, freqTree.get(key));
 	}	
-       
 	
     }
 
@@ -108,44 +103,26 @@ public class WordHistogram{
 	return freqTree;
     }
 
-    //print a list, the words in the list are formatted according to frequency and maxLength
+    //print a list, the words in the list formatted according to frequency and maxLength
     private static void printList(int maxLen, int freq, ArrayList<String> list){
 	int padding;
-	File file;
+	
+	for(String word : list){
+	    padding = maxLen- word.length();
 
-	try{
-
-	    //create outfile if it doesn't exist
-	    file = new File(outFile);
-	    if(!file.exists())
-		file.createNewFile();
-		
-	    FileWriter writer = new FileWriter(file, true);
-	    PrintWriter out = new PrintWriter(writer);
-
-	    //iterate through words in list
-	    for(String word : list){
-		padding = maxLen- word.length();
-
-		//print the number of spaces needed for padding
-		for(int i=0; i<padding; i++){
-		    out.print(" ");
-		}
-
-		out.print(word + " | ");
-
-		//print number of '=' according to frequency
-		for(int i=0; i<freq; i++){
-		    out.print("=");
-		}
-
-		out.println(" (" + freq + ")");
+	    //print the number of spaces needed for padding
+	    for(int i=0; i<padding; i++){
+		System.out.print(" ");
 	    }
-	    out.close();
-	}
-	catch(IOException e){
-	    e.printStackTrace();
-	    System.exit(-1);
+
+	    System.out.print(word + " | ");
+
+	    //print number of '=' according to frequency
+	    for(int i=0; i<freq; i++){
+		System.out.print("=");
+	    }
+
+	    System.out.println(" (" + freq + ")");
 	}
     }
 }
