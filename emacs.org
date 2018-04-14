@@ -1,0 +1,314 @@
+* Emacs
+  A text editor, and so much more
+
+  Files are opened into buffers, a window displays a buffer, a single frame can
+  show multiple windows
+  
+  * important key abreviations
+    - C :: Control
+    - M :: Alt
+    - S :: Shift
+** Text Manipulation
+   
+   - M-q :: (fill-paragraph) Redistribute line breaks, and delete excess tabs and spaces within
+the paragraph in such a way that all the lines end up fitting within a certain
+maximum width, determinded by *fill-column*.
+    - M-o M-s :: Center line
+    - C-x f :: set-fill-column, 70 by default; I have preset to 80 in .emacs
+
+** Movement
+   - C-v :: page down
+   - M-v :: Page up
+
+   - C-p :: Up line
+   - C-b :: back char
+   - C-n :: down line
+   - C-f :: forward char
+
+   - M-f :: Forward word
+   - M-b :: back word
+
+   - C-a :: beginning of line
+   - C-e :: end of line
+   - M-a :: Previous Sentence
+   - M-e :: Next sentence
+   - M-< :: beggining of file
+   - M-> :: end of file
+** Files
+   + Opening files
+     - C-x C-f :: open file into buffer
+     - C-x 4 f :: Open file in new window
+     - C-x 5 f :: open file in new frame
+
+		  
+   + Save file
+     - C-x C-s :: save current buffer to its file
+     - C-x s :: Save all buffers to their files
+     - C-x C-w :: Save the current buffer with a specified file name
+
+** Buffer
+   + Kill buffers
+     - C-x k <bufname> :: Kill buffer
+
+** Windows
+   + Split windows
+     - C-x 2 :: split selected window vertically
+     - C-x 3 :: Split selected window horizontaly
+	      
+   + Change window
+     - C-x o :: select another window
+     - C-M-v :: Scroll next window
+
+   + Open new window
+     - C-x 4 b <bufname> :: Show buffer in another window
+     - C-x 4 f <filename> :: open file in another window
+     - C-x 4 d <directory> :: open directory in another window
+
+   + Close Windows
+     - C-x 0 :: delete selected window
+     - C-x 1 :: Delete all windows in frame excepted selected window
+
+   + Resize window
+     - C-x ^ :: Taller
+     - C-x { :: narrower
+     - C-x } :: wider
+     - C-x + :: Make all windows the same height
+     - C-x - :: Shrink window if its bufffr doesn't need so many lines
+
+	      
+** Frames
+   - C-x C-x :: close all frames
+   - C-x 5 0 :: Close current frame
+   - C-x 5 2 :: create new frame
+		
+** Minor Modes 
+ 
+*** Auto-Fill
+    Automatic line breaking - ensures no line exceeds certain length
+
+    When enabled, insterting at a column beyond current-fill-column
+    automatically breaks the line. 
+    
+    
+    - Auto-Fill-Mode :: Toggle mode
+    - C-x f :: set-fill-column, 70 by default; I have preset to 80 in .emacs
+** Help
+   Emacs has lots of documentation that can be accessed within Emacs
+
+   - C-h :: Help Command, must be followed by
+     - ? :: Provides a list of available options
+     - a ARG :: Show commands whose name matches ARG; can be word, list or regex
+     - m :: Display info about current major and minor modes
+
+** CUSTOMIZATION 
+   EMACS uses its own flavor of Lisp, Emacs Lisp. In fact, Emacs is really just
+   an interpreter for Emacs Lisp. This means you will have to get familiar with
+   the language to customize Emacs
+
+   The file .Emacs is the quickest way to add custimatizations to your Emacs. It
+   is found in your home directory and is similiar to .vimrc in function.
+
+   - load-file :: run this command after making changes to .Emacs file so those
+   changes can take effect without having to restart Emac
+* ORG-mode
+** Outlining
+   In org, notes can structured by using *'s to determine hierarchy
+   level. the tab key is used to colloapse or expand the note trees.
+*** Structure Editing
+    - M-RET (org-meta-return) :: insert new heading, item, row
+    - C-RET :: Insert a new heading at the end of the current subtree
+    - M-S-RET :: Insert new TODO entry with same level as current heading
+    - C-S-RET :: Insert new TODO entry with same level as current heading, but at end of current subtree
+    - M-left :: promote current heading by one level
+    - M-right :: Deomote current heading by one level
+    - M-S-left :: Promote current subtree by one level
+    - M-S-right :: Demote current subtree by one level
+    - M-up :: Move subtree up
+    - M-down :: Move subtree down
+    - C-c * :: *org-toggle-heading* Turn normal line or plain list into subheading
+    - C-c C-x C-w :: kill subtree
+    - C-c C-x M-w :: copy subtree
+    - C-c C-x C-y :: paste subtree
+*** Global and Local Cycling
+    For local cycling to work, cursor must be on a subtree
+   
+    (Org Cycle)Tab : cycle current subtree among states
+
+    (Org-global-cycle) C-u Tab : cycle entire buffer amongst states
+   
+    (org-set-startup-visibility) C-u C-u Tab : Switch back to startup
+    visibilty of buffer
+
+    (outline-show-all) C-u C-u C-u TAB : show all, including drawers
+
+    (org-reveal) C-c C-r : Reveal Context around point, showing the
+    current entry, the following heading, and the hierarchy above. 
+   
+    (outline-show-branches) C-c C-k : Expose all the headings of the
+    subtree, CONTENTS view for just one subtree
+
+    (outline-show-children) C-c TAB  Expose all direct children of the
+    subtree
+
+    (org-tree-to-indirect-buffer) C-c C-x b : Show the current subtree
+    in an indirect buffer.
+   
+    (org-copy-visible) C-c C-x v : Copy the visible text in the region
+    into the kill ring
+**** Initial Visibility
+    Default global state of an orgview file is set to overview, which
+    only shows the topmost headlines. To change this behavior for Emacs
+    use the variable org-startuyp-folder. You can also add one of the
+    folloing lines anywhere in the buffer to just affect that file:
+
+    #+STARTUP: overview
+               content
+               showall
+	       showeverything
+
+**** Catching invisible edits
+     Sometimes you may inadvertently edit an invisible part of the 
+     buffer and be confused on what has been edited and how to undo 
+     the mistake. Setting *org-catch-invisible-edits* to non-nil will
+     help prevent this. See the docstring of this option on how Org 
+     should catch invisible edits and process them. 
+    
+** Motion
+    (org-next-visible-heading) C-c C-n : Next Heading 
+   
+    (org-previous-visible-heading) C-c C-p : Previous Heading
+
+    (org-forward-same-level) C-c C-f: Next heading same level
+
+    (org-backward-same-level) C-c C-b : Previous Heading Same level
+
+    (outline-up-heading) C-c C-u : Backward to higher level heading 
+
+    (org-goto) C-c C-j : Jump to a different place without changing the
+    current outline visibility. Shows the document structure in a temporary
+    buffer, where you can use the following keys to find your destination:
+     
+       TAB - cycle visibility
+       down/up - Next/previous headline
+       RET - Select this location
+       / - Do a Sparse-tree search
+   
+** Markup
+    *Bold* , /italic/ , =verbatim=, +strikethrough+ 
+
+** Links 
+    All links follow the general format [link][[[description]]] or [link], surrounded
+    by another pair of []'s
+
+    If you want to deformat a link so that it shows you the plaintext just place
+    your cursor in front of the link and hit backspace
+*** internal links
+    Without any context, org will assume that the link is text in the current
+    buffer and search for it.
+      [[Motion]]
+
+     
+    You can also make a dedicated <<target>>  that will then have priorty when
+    you create a [[target][link]] 
+   
+*** Radio Targets
+    Org can automatically turn all occurences of a specific word into a link.
+   
+    To do this you need only specify a <<<keyword>>> which you surround in triple
+    angle brackets. Now any occurence of keyword will link back to the original
+    keyword
+
+    Org normally scans for the keyword upon opening but you can force scanning
+    during editing with *C-c C-c*
+*** external links
+ Org can link to files, websites, email messages, and just about anything else
+
+** lists
+   under any headline, you can make a list to provide even  more structure
+
+*** There are 3 kinds of lists
+   * unordered
+     unordered list start with -,+,or *
+   * ordered 
+     ordered lists start with a numeral followed by either a period or
+     right paranthesis
+     1. item1
+	some text
+     2. item2
+     3. hoopla
+
+   * description
+     Description lists are unordered list items, but contain the
+     seperator :: to distinguish between term and description
+     * Emacs :: a test editor, and so much more
+     * Org :: a major mode in emacs that makes planning and note taking easy
+	     
+*** List commands
+    * M-Ret :: Insert new item at current level
+    * M-S-Ret :: Insert an item with a check box
+    * S-up/S-down :: jump to the previous/next item in the current list
+    * M-S-Left/M-S-Right :: Decrease/Increase indention of an item
+    * M-up/M-down :: Movethe item(and any subitems) down. If the list
+                     is ordered, renumbering is automatic
+    * S-left/right :: Cycles bullet styles of list
+    * C-c C-c :: toggle state of checkbox, in any case verrify bullet
+                 and indention consi
+** Properties
+** Dates and times
+   
+*** Timestamps
+    + C-c . :: prompt for date and insert corresponding timestamp
+    +  :: 
+
+*** Deadline and Scheduled
+    Deadline and scheduled are two special properties with similar
+    meaning and functionality
+
+    + Deadline :: Item is supposed to be finished on this date
+    + Scheduled :: You will begin working on item on this date
+
+    + C-c C-d :: Insert deadline keyword along with timestap
+    + C-c C-s :: Insert Scheduled keyword along with timestamp
+  
+** Source Code
+   Source code can be easily inserted into an org file to make it obvious that
+   what you are looking at is code. It allows syntax highlighting and even code
+   execution with the package *Babel*. 
+
+   All Source code should be inserted inside a source block.
+   - <s-TAB :: Create Template of a source block
+	       * once the Template is created write the language you are using
+               * after Begin_SRC
+*** src block
+
+ #+BEGIN_SRC java 
+ Public static void main() 
+ {
+   System.out.println("Hello World!");
+ } 
+ #+END_SRC 
+** To do items 
+   Any headline that starts with the word todo becomes a todo item
+
+*** TODO
+    Any todo item can cycle through states with *C-c C-t* 
+*** global todo list
+    * collects the todo items from all agenda files into a single
+      buffer, whcih will be in agenda mode 
+    * (org-todo-list) C-c a t :: shows global todo list
+    * S-M-RET :: insert new todo entry below current one
+
+** Source 
+   [[https://orgmode.org/][org mode manual]]
+
+   [[ https://www.youtube.com/watch?v=oJTwQvgfgMM ][Google Talk by Org
+   Mode creator
+* Evil
+  A mode that tries to emulate vim keybindings in emacs
+** insert mode
+   - C-v :: quoted insert, insert literal instead of ascii char
+   - C-k :: insert digraph
+   - C-o :: excute in normal state
+   - C-t :: shift line right
+   - C-d :: shift line left
+   - C-w :: delete backward word
