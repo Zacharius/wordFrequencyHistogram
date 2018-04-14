@@ -69,7 +69,6 @@ public class WordHistogram{
 	keys = freqTree.descendingKeySet();
 
 	//print all keys in treeMap
-	System.out.println("Word Frequency Histogram for " + arg[0]);
 	for(int key : keys){
 	    printList(maxLen, key, freqTree.get(key));
 	}	
